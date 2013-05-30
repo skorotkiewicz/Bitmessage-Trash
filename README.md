@@ -12,7 +12,7 @@ What inspired me to create this program?
 No trash and message file occupies _more space_ on disk!
 
 > du -sh messages.dat 
-> 112M  messages.dat
+112M  messages.dat
 
 
 Version
