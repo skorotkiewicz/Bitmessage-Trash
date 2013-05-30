@@ -13,7 +13,7 @@ class messages:
     def __init__(self):
 
         # Database
-        self.engine = sqlite3.connect('messages.db')
+        self.engine = sqlite3.connect('messages.dat')
 
         # Load gui window from glade XML
         self.wTree = gtk.glade.XML ('guiContact.glade', 'window1')
