@@ -1,11 +1,11 @@
 Bitmessage Trash
 =========
 
-This is a simple program written in Python to remove and reading messages from the trash
+This is a simple program written in Python to remove and read messages from the trash
 
   - You can read messages from the trash
   - You can completely delete messages from trash
-  - This is a version written in one night, something anyone can add, change, just let me know about changes, maybe I'll like :)
+  - This is a version written in one night, anyone can add something, change, just let me know about changes, maybe I'll like :)
 
 
 What inspired me to create this program? 
