@@ -11,8 +11,9 @@ This is a simple program written in Python to remove and read messages from the 
 What inspired me to create this program? 
 No trash and message file occupies _more space_ on disk!
 
-> du -sh messages.dat 
-112M  messages.dat
+> du -sh messages.dat
+
+> 112M  messages.dat
 
 
 Version
