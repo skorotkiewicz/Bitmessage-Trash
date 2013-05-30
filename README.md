@@ -23,7 +23,8 @@ Version
 Installation
 --------------
 
-    $ git clone https://github.com/modInfo/Bitmessage-Trash ~/.PyBitmessage
+    $ git clone https://github.com/modInfo/Bitmessage-Trash ~/Bitmessage-Trash
+    $ mv ~/Bitmessage-Trash/* ~/.PyBitmessage/
     $ cd ~/.PyBitmessage
     $ python2 trash.py
 
