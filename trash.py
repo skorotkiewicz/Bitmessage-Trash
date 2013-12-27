@@ -105,6 +105,7 @@ class messages:
         selection = self.list.get_selection()
         resultID = selection.get_selected()
         model, iter = resultID
+        if iter == None: return
         messageid = model.get_value(iter, 0)
 
         query = 'SELECT rowid,subject,message FROM inbox WHERE rowid = "{0}"'\
