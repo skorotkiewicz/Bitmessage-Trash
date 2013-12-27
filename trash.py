@@ -4,6 +4,7 @@ import sqlite3
 import gtk
 import gtk.glade
 import pygtk
+import sys
 
 
 pygtk.require("2.0")
@@ -13,7 +14,7 @@ class messages:
     def __init__(self):
 
         # Database
-        self.engine = sqlite3.connect('messages.dat')
+        self.engine = sqlite3.connect( sys.argv[1] if len( sys.argv ) > 1 else 'messages.dat' )
 
         # Load gui window from glade XML
         self.wTree = gtk.glade.XML ('guiContact.glade', 'window1')
@@ -85,7 +86,11 @@ class messages:
 
     #load list from databse
     def load_list(self):
-        result = self.engine.execute('SELECT rowid,subject FROM inbox WHERE folder = "trash"')
+        try:
+            result = self.engine.execute('SELECT rowid,subject FROM inbox WHERE folder = "trash"')
+        except sqlite3.OperationalError:
+            print "Cannot read messages.dat, please specify its location"
+            sys.exit()
         for row in result:
             self.dataList.append((row[0], row[1]))
 
@@ -115,6 +120,13 @@ class messages:
 
     def on_exit(self, widget):
         gtk.main_quit()
+
+
+# Help?
+for argument in sys.argv[1:]:
+    if argument[0] == '-' and 'h' in argument or '?' in argument:
+        print "Usage: python2 trash.py /path/to/messages.dat"
+        sys.exit()
 
 app = messages()
 gtk.mainloop()

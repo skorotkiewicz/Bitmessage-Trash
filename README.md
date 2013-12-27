@@ -19,7 +19,7 @@ No trash and message file occupies _more space_ on disk!
 Version
 -
 
-0.01
+0.01.1
 
 Installation
 --------------
@@ -29,6 +29,9 @@ Installation
     $ cd ~/.PyBitmessage
     $ python2 trash.py
 
+You can now also specify the messages.dat path:
+
+    $ python2 trash.py /path/to/messages.dat
 
 License
 -
