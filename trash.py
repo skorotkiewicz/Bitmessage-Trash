@@ -49,6 +49,7 @@ class messages:
         dic = { 
                 "on_delete_button_clicked": self.on_delete_button_clicked,\
                 "read_message_button": self.read_message_button,\
+                "export_message_button": self.export_message_button,\
                 "on_exit": self.on_exit}
 
         self.wTree.signal_autoconnect (dic)
@@ -71,6 +72,9 @@ class messages:
             if result:
                # get GtkListStore(model) and GtkTreeIter(iter) from object result
                model, iter = result
+
+               if iter == None: return
+
                # get name
                messageid = model.get_value(iter, 0)
 
@@ -118,6 +122,33 @@ class messages:
         md = gtk.MessageDialog(None, gtk.DIALOG_DESTROY_WITH_PARENT, gtk.MESSAGE_INFO, gtk.BUTTONS_CLOSE, message)
         md.run()
         md.destroy()
+
+    def export_message_button(self, widget):
+        selection = self.list.get_selection()
+        resultID = selection.get_selected()
+        model, iter = resultID
+        if iter == None: return
+
+        messageid = model.get_value(iter, 0)
+
+        query = 'SELECT rowid,subject,message FROM inbox WHERE rowid = "{0}"'\
+            .format(messageid)
+        result = self.engine.execute(query)
+        for row in result:
+            title = row[1]+"\n"
+            message = title+row[2]
+
+        fd=gtk.FileChooserDialog(title="Export message {0}".format(title.strip()), parent=None, action=gtk.FILE_CHOOSER_ACTION_SAVE, buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_SAVE, gtk.RESPONSE_OK), backend=None)
+        fd.set_do_overwrite_confirmation(True)
+        fd.set_current_name( ''.join( wchar for wchar in title.strip() if ord(wchar)>0x20 and ord(wchar)<0x7F ) ) # No funny characters allowed, but only because I personally don't like them, not because it's an inherently reasonable thing to do.
+        response = fd.run()
+        if response == gtk.RESPONSE_OK:
+            try:
+                with open(fd.get_filename(),'w') as exportfile:
+                   exportfile.write(message)
+            except IOError:
+                print "cannot open {0}".format(fd.get_filename())
+        fd.destroy()
 
     def on_exit(self, widget):
         gtk.main_quit()
