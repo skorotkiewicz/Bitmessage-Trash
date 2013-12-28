@@ -50,6 +50,7 @@ class messages:
                 "on_delete_button_clicked": self.on_delete_button_clicked,\
                 "read_message_button": self.read_message_button,\
                 "export_message_button": self.export_message_button,\
+                "undelete_message_button": self.undelete_message_button,\
                 "on_exit": self.on_exit}
 
         self.wTree.signal_autoconnect (dic)
@@ -149,6 +150,22 @@ class messages:
             except IOError:
                 print "cannot open {0}".format(fd.get_filename())
         fd.destroy()
+
+    def undelete_message_button(self, widget):
+        # get selection
+        selection = self.list.get_selection()
+        resultID = selection.get_selected()
+        model, iter = resultID
+        if iter == None: return
+        messageid = model.get_value(iter, 0)
+
+        # move back to inbox
+        query = 'UPDATE inbox SET folder = "inbox" WHERE rowid = "{0}"'\
+            .format(messageid)
+        self.engine.commit()
+
+        # Remove from display
+        model.remove(iter)
 
     def on_exit(self, widget):
         gtk.main_quit()

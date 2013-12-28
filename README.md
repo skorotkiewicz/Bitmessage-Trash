@@ -6,6 +6,7 @@ This is a simple program written in Python to remove and read messages from the 
   - You can read messages from the trash
   - You can completely delete messages from trash
   - You can recover (export) trashed messages to text files
+  - You can move trashed messages back to inbox
   - This is a version written in one night, anyone can add or change something, just let me know about changes, maybe I'll like :)
 
 
@@ -20,6 +21,9 @@ PyBitmessage has no option for trash management, so when you accidentally move a
 
 Version
 -
+
+0.03
+ - Undeleting messages
 
 0.02
  - Exporting messages
